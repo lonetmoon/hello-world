@@ -1,6 +1,10 @@
 GIT笔记
 
 
+----------------------------------------------------------------
+
+# 清理未跟踪的文件和文件夹
+$ git clean -fdx [path]
 
 ----------------------------------------------------------------
 
@@ -55,6 +59,30 @@ origin  https://github.com/lonetmoon/hello-world.git (push)
 
 ----------------------------------------------------------------
 
+git diff
+
+# 查看已追踪但尚未暂存的文件更新了哪些部分, 不添加额外参数
+$ git diff
+
+# 对使用git add添加到了暂存区的内容, 使用--staged参数或者--cached
+$ git diff --staged
+$ git diff --cached [file]
+
+$ git diff --check  # 检查修改是否引入了空白字符
+
+# --name-only 只显示文件名
+git diff --name-only HEAD~ HEAD
+git diff --name-only <commit-1> <commit-2>
+
+$ git diff topic master    (1)
+$ git diff topic..master   (2)
+$ git diff topic...master  (3)
+1.Changes between the tips of the topic and the master branches.
+2.Same as above.
+3.Changes that occurred on the master branch since when the topic branch was started off it.
+
+----------------------------------------------------------------
+
 
 
 
@@ -75,54 +103,10 @@ git push -u origin master
 
 ----------------------------------------------------------------
 
-# linux内核代码下载
-
-$ git clone git://git.kernel.org/pub/scm/git/git.git
-$ git clone http://www.kernel.org/pub/scm/git/git.git
-
-# notepad++ 代码下载
-$ git clone https://github.com/notepad-plus-plus/notepad-plus-plus
-
-glib下载
-git clone https://github.com/GNOME/glib.git
-
-git clone https://github.com/openembedded/meta-openembedded.git
-git clone https://github.com/openembedded/openembedded-core.git
-
-# exfat-nofuse
-git clone https://github.com/dorimanx/exfat-nofuse.git
-
-# tr069-netcwmp
-git clone https://github.com/netcwmp/netcwmp.git
-
-# nodogsplash
-git clone https://github.com/nodogsplash/nodogsplash.git
-
-# wifidog
-git clone https://github.com/wifidog/wifidog-gateway.git
-
-----------------------------------------------------------------
-
-git设置
-
-# 正常显示中文文件名
-$ git config --global core.quotepath false
-
-# 不进行LF--CRLF转换
-$ git config --global core.autocrlf false
-
-# 解决git clone时显示"Filename too long"错误
-git config --global core.longpaths true
-
-# 设置邮箱用户名和密码
-$ git config --global user.email "lonet@qq.com"
-$ git config --global user.name wgj
-
-----------------------------------------------------------------
 用HEAD表示当前版本，上一个版本就是HEAD^，上上一个版本就是HEAD^^，
 当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。
 
-Git的可视化工具很多，简单的列举一下：TortoiseGit、SourceTree、GitGUI等等，过有自带的gitk。
+Git可视化工具，Git Extensions、 TortoiseGit、SourceTree、GitGUI等等，还有自带的gitk。
 ----------------------------------------------------------------
 
 # 查看哪些文件在版本控制中
@@ -139,34 +123,6 @@ Show what would be done, without making any changes.
 ----------------------------------------------------------------
 
 $ git status
-
-----------------------------------------------------------------
-
-# 查看到未传送到远程代码库的提交
-$ git cherry -v
-
-----------------------------------------------------------------
-
-git diff
-
-# 查看以追踪但尚未暂存的文件更新了哪些部分, 不添加额外参数
-$ git diff
-# 对使用了add添加到了暂存区的内容, 使用--staged参数或者--cached
-$ git diff --staged
-$ git diff --cached [file]
-
-$ git diff --check  # 检查修改是否引入了空白字符
-
-# --name-only 只显示文件名
-git diff --name-only HEAD~ HEAD
-git diff --name-only <commit-1> <commit-2>
-
-$ git diff topic master    (1)
-$ git diff topic..master   (2)
-$ git diff topic...master  (3)
-1.Changes between the tips of the topic and the master branches.
-2.Same as above.
-3.Changes that occurred on the master branch since when the topic branch was started off it.
 
 ----------------------------------------------------------------
 
@@ -314,10 +270,6 @@ $ git push origin HEAD:refs/for/branch_name
 
 --------------------------------------------------------------
 
-----------------------------------------------------------------
-
-# 清理未跟踪的文件和文件夹
-$ git clean -fdx [path]
 
 ----------------------------------------------------------------
 
@@ -337,24 +289,7 @@ $ git archive --format=tar --prefix=git-1.4.0/ v1.4.0 | gzip >git-1.4.0.tar.gz
 
 ----------------------------------------------------------------
 
-repo操作
-
-repo forall -c git reset --hard HEAD
-repo forall -c git clean -fdx
-repo forall -p -c git branch         # 打印出每个仓库的路径
-
-repo sync -cdx  # 更新同时清理工程
-
-repo init -u
-repo sync -c --no-tags -j8
-repo start branch_name --all
-
-git push caf HEAD:refs/for/branch_name
-repo upload .
-
---------------------------------------------------------------
-
-# fetch不会合并更新到当前分支，后续还要merge
+# fetch 不会合并更新到当前分支，后续还要 merge
 $ git fetch origin
 $ git fetch origin master # 只fetch master分支
 $ git merge origin/master
@@ -366,7 +301,7 @@ $ git merge origin/master # 或者 git rebase origin/master
 
 ----------------------------------------------------------------
 
-merge会自动提交；当前工作区最好不要有未提交的修改
+merge会自动提交，当前工作区最好不要有未提交的修改
 $ git merge -m <msg> <commit>.... # 用msg代替自动merge说明
 $ git merge --no-commit dev # merge dev分支到当前分支但是不自动提交
 $ git merge --abort         # is equivalent to git reset --merge when MERGE_HEAD is present.
@@ -396,11 +331,12 @@ $ git push origin develop # 如果develop分支不存在，则会被新建。
 
 ----------------------------------------------------------------
 
-stash
-
-有时，在一个分支上做了一些工作，修改了很多代码，而这时需要切换到另一个分支干点别的事。但又不想将只做了一半的工作提交。
-stash 将工作区与暂存区中的内容做一个提交，保存起来，然后使用reset Hard 选项恢复工作区与暂存区内容。我们可以随时使用 stash apply 将修改应用回来。
-stash 实现思路将我们的修改提交到本地仓库，使用特殊的分支指针（.git/refs/stash）引用该提交，然后在恢复的时候，将该提交恢复即可。
+stash 将工作区与暂存区中的内容做一个提交，保存起来，
+然后使用 reset Hard 选项恢复工作区与暂存区内容。
+我们可以随时使用 stash apply 将修改应用回来。
+stash 实现思路将我们的修改提交到本地仓库，
+使用特殊的分支指针（.git/refs/stash）引用该提交，
+然后在恢复的时候，将该提交恢复即可。
 
 git stash list [<options>]            # 列出stash（带<message>）
 git stash show [<stash>]              # 列出最新的一个stash
@@ -504,5 +440,66 @@ We want to make topic forked from branch master; for example, because the functi
 We can get this using the following command:
 
 git rebase --onto master next topic
+
+--------------------------------------------------------------
+
+git设置
+
+# 正常显示中文文件名
+$ git config --global core.quotepath false
+
+# 不进行LF--CRLF转换
+$ git config --global core.autocrlf false
+
+# 解决git clone时显示"Filename too long"错误
+git config --global core.longpaths true
+
+# 设置邮箱用户名和密码
+$ git config --global user.email "lonet@qq.com"
+$ git config --global user.name wgj
+
+----------------------------------------------------------------
+
+# linux内核代码下载
+$ git clone git://git.kernel.org/pub/scm/git/git.git
+$ git clone http://www.kernel.org/pub/scm/git/git.git
+
+# notepad++ 代码下载
+$ git clone https://github.com/notepad-plus-plus/notepad-plus-plus
+
+# glib下载
+$ git clone https://github.com/GNOME/glib.git
+
+$ git clone https://github.com/openembedded/meta-openembedded.git
+$ git clone https://github.com/openembedded/openembedded-core.git
+
+# exfat-nofuse
+git clone https://github.com/dorimanx/exfat-nofuse.git
+
+# tr069-netcwmp
+$ git clone https://github.com/netcwmp/netcwmp.git
+
+# nodogsplash
+$ git clone https://github.com/nodogsplash/nodogsplash.git
+
+# wifidog
+$ git clone https://github.com/wifidog/wifidog-gateway.git
+
+----------------------------------------------------------------
+
+repo操作
+
+repo forall -c git reset --hard HEAD
+repo forall -c git clean -fdx
+repo forall -p -c git branch         # 打印出每个仓库的路径
+
+repo sync -cdx  # 更新同时清理工程
+
+repo init -u
+repo sync -c --no-tags -j8
+repo start branch_name --all
+
+git push caf HEAD:refs/for/branch_name
+repo upload .
 
 --------------------------------------------------------------
