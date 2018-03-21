@@ -1,98 +1,77 @@
-GIT±Ê¼Ç
+GITç¬”è®°
 
-# ÉÏ´«´úÂëµ½ github
-echo "# zzzz" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git remote add origin https://github.com/username/repository.git
-git push -u origin master
 
 ----------------------------------------------------------------
 
-# linuxÄÚºË´úÂëÏÂÔØ
-
-$ git clone git://git.kernel.org/pub/scm/git/git.git
-$ git clone http://www.kernel.org/pub/scm/git/git.git
-
-# notepad++ ´úÂëÏÂÔØ
-$ git clone https://github.com/notepad-plus-plus/notepad-plus-plus
-
-glibÏÂÔØ
-git clone https://github.com/GNOME/glib.git
-
-git clone https://github.com/openembedded/meta-openembedded.git
-git clone https://github.com/openembedded/openembedded-core.git
-
-# exfat-nofuse
-git clone https://github.com/dorimanx/exfat-nofuse.git
-
-# tr069-netcwmp
-git clone https://github.com/netcwmp/netcwmp.git
-
-# nodogsplash
-git clone https://github.com/nodogsplash/nodogsplash.git
-
-# wifidog
-git clone https://github.com/wifidog/wifidog-gateway.git
+# æ¸…ç†æœªè·Ÿè¸ªçš„æ–‡ä»¶å’Œæ–‡ä»¶å¤¹
+$ git clean -fdx [path]
 
 ----------------------------------------------------------------
 
-gitÉèÖÃ
+git log
 
-# Õı³£ÏÔÊ¾ÖĞÎÄÎÄ¼şÃû
-$ git config ¨Cglobal core.quotepath false
+# æŸ¥çœ‹æŸä¸ªæ–‡ä»¶çš„æœ€è¿‘2æ¬¡æäº¤
+$ git log -n2 fileName
 
-# ²»½øĞĞLF--CRLF×ª»»
-$ git config --global core.autocrlf false
+# æ˜¾ç¤ºæœ€è¿‘1æ¬¡æäº¤çš„å†…å®¹å·®å¼‚
+$ git log -p -1
 
-# ½â¾ögit cloneÊ±ÏÔÊ¾"Filename too long"´íÎó
-git config --global core.longpaths true
+# æ˜¾ç¤ºå•è¡Œç®€çŸ­æ—¥å¿—
+$ git log --oneline # åŒ--pretty=oneline
 
-# ÉèÖÃÓÊÏäÓÃ»§ÃûºÍÃÜÂë
-$ git config --global user.email "lonet@qq.com"
-$ git config --global user.name wgj
+# ä½¿ç”¨é™åˆ¶ç¬¦-Såé¢ç´§è·Ÿè¦æŸ¥è¯¢çš„å­—ç¬¦ä¸²
+$ git log -Smethod_name
 
-----------------------------------------------------------------
-ÓÃHEAD±íÊ¾µ±Ç°°æ±¾£¬ÉÏÒ»¸ö°æ±¾¾ÍÊÇHEAD^£¬ÉÏÉÏÒ»¸ö°æ±¾¾ÍÊÇHEAD^^£¬
-µ±È»ÍùÉÏ100¸ö°æ±¾Ğ´100¸ö^±È½ÏÈİÒ×Êı²»¹ıÀ´£¬ËùÒÔĞ´³ÉHEAD~100¡£
+# æŸ¥çœ‹æŸæ¬¡æäº¤çš„ä¿®æ”¹å†…å®¹
+$ git show <commit-hash-id>
 
-GitµÄ¿ÉÊÓ»¯¹¤¾ßºÜ¶à£¬¼òµ¥µÄÁĞ¾ÙÒ»ÏÂ£ºTortoiseGit¡¢SourceTree¡¢GitGUIµÈµÈ£¬¹ıÓĞ×Ô´øµÄgitk¡£
-----------------------------------------------------------------
+# æŸ¥çœ‹20161101å·åˆ°07å·ï¼ŒPCçš„æäº¤è®°å½•
+$ git log --pretty="%h - %s" --author=PC --since="2016-11-01" --before="2017-01-27"
 
-# ²é¿´ÄÄĞ©ÎÄ¼şÔÚ°æ±¾¿ØÖÆÖĞ
-$ git ls-files
+# æ˜¾ç¤ºåœ¨devåˆ†æ”¯ä½†æ˜¯ä¸åœ¨masteråˆ†æ”¯ä¸­çš„æäº¤
+# --name-statusä¼šæ˜¾ç¤ºæ–‡ä»¶åå’Œè·¯å¾„
+$ git log --name-status dev ^master
+$ git log --name-status master..dev
 
-git-tag
+# Shows all commits that are in any of local branches but not in any of
+# remote-tracking branches for origin (what you have that origin doesn't).
+$ git log --branches --not --remotes=origin
 
-git-diff-files
-
---dry-run
-Show what would be done, without making any changes.
-
--n»ò--no-tags ²»ÏÂÔØtag
-----------------------------------------------------------------
-
-$ git status
-
-----------------------------------------------------------------
-
-# ²é¿´µ½Î´´«ËÍµ½Ô¶³Ì´úÂë¿âµÄÌá½»
+# æŸ¥çœ‹masteråˆ†æ”¯æœªæ¨åˆ°è¿œç¨‹masterçš„æäº¤
+$ git log master --not --remotes=*/master
+$ git log master ^origin/master
+$ git log master origin/master..
+$ git log origin/master..HEAD
 $ git cherry -v
+
+# å¯ä»¥é€šè¿‡`git log`å‘½ä»¤æŸ¥çœ‹å„ä¸ªåˆ†æ”¯æ‰€æŒ‡å‘çš„å¯¹è±¡
+$ git log --oneline --decorate
+
+# å¦‚æœä½ æƒ³æŸ¥çœ‹å›¾å½¢å¼çš„åˆ†å‰å†å²,å¯ä»¥è¿™æ ·:
+$ git log --oneline --decorate --graph --all
+
+----------------------------------------------------------------
+
+# æŸ¥çœ‹è¿œç¨‹ä»“åº“åœ°å€
+$ git remote -v
+origin  https://github.com/lonetmoon/hello-world.git (fetch)
+origin  https://github.com/lonetmoon/hello-world.git (push)
 
 ----------------------------------------------------------------
 
 git diff
 
-# ²é¿´ÒÔ×·×Ùµ«ÉĞÎ´Ôİ´æµÄÎÄ¼ş¸üĞÂÁËÄÄĞ©²¿·Ö, ²»Ìí¼Ó¶îÍâ²ÎÊı
+# æŸ¥çœ‹å·¥ä½œåŒºä¸­çš„ä¿®æ”¹
 $ git diff
-# ¶ÔÊ¹ÓÃÁËaddÌí¼Óµ½ÁËÔİ´æÇøµÄÄÚÈİ, Ê¹ÓÃ--staged²ÎÊı»òÕß--cached
+
+# æŸ¥çœ‹æš‚å­˜åŒºä¸­çš„ä¿®æ”¹ï¼ˆå°†è¦æäº¤çš„ä¿®æ”¹ï¼‰
 $ git diff --staged
-$ git diff --cached [file]
+$ git diff --cached
 
-$ git diff --check  # ¼ì²éĞŞ¸ÄÊÇ·ñÒıÈëÁË¿Õ°××Ö·û
+# æ£€æŸ¥ä¿®æ”¹æ˜¯å¦å¼•å…¥äº†ç©ºç™½å­—ç¬¦
+$ git diff --check
 
-# --name-only Ö»ÏÔÊ¾ÎÄ¼şÃû
+# --name-only åªæ˜¾ç¤ºæ–‡ä»¶å
 git diff --name-only HEAD~ HEAD
 git diff --name-only <commit-1> <commit-2>
 
@@ -105,77 +84,79 @@ $ git diff topic...master  (3)
 
 ----------------------------------------------------------------
 
-git apply
 
-# --checkÖ»¼ì²é¶ø²»Ó¦ÓÃpatch£»--reject½ûÓÃÔ­×Ó²Ù×÷£¬¼´Ó¦ÓÃ¿ÉÓ¦ÓÃµÄpatch hunk£¬¾Ü¾øµÄhunk±£´æÔÚ*.rejÎÄ¼ş
-$ git apply [--check] [--reject] [<patch>¡­?]
+
+
+
+
+
+
+----------------------------------------------------------------
+----------------------------------------------------------------
+
+# ä¸Šä¼ ä»£ç åˆ° github
+echo "# zzzz" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/username/repository.git
+git push -u origin master
 
 ----------------------------------------------------------------
 
-git log
+ç”¨HEADè¡¨ç¤ºå½“å‰ç‰ˆæœ¬ï¼Œä¸Šä¸€ä¸ªç‰ˆæœ¬å°±æ˜¯HEAD^ï¼Œä¸Šä¸Šä¸€ä¸ªç‰ˆæœ¬å°±æ˜¯HEAD^^ï¼Œ
+å½“ç„¶å¾€ä¸Š100ä¸ªç‰ˆæœ¬å†™100ä¸ª^æ¯”è¾ƒå®¹æ˜“æ•°ä¸è¿‡æ¥ï¼Œæ‰€ä»¥å†™æˆHEAD~100ã€‚
 
---oneline- # Ñ¹ËõÄ£Ê½£¬ÔÚÃ¿¸öÌá½»µÄÅÔ±ßÏÔÊ¾¾­¹ı¾«¼òµÄÌá½»¹şÏ£ÂëºÍÌá½»ĞÅÏ¢
---graph-   # Í¼ĞÎÄ£Ê½
+Gitå¯è§†åŒ–å·¥å…·ï¼ŒGit Extensionsã€ TortoiseGitã€SourceTreeã€GitGUIç­‰ç­‰ï¼Œè¿˜æœ‰è‡ªå¸¦çš„gitkã€‚
+----------------------------------------------------------------
 
-$ git log --pretty=oneline
+# æŸ¥çœ‹å“ªäº›æ–‡ä»¶åœ¨ç‰ˆæœ¬æ§åˆ¶ä¸­
+$ git ls-files
 
-# ²é¿´Ä³¸öÎÄ¼şµÄĞŞ¸ÄÀúÊ·
-$ git log fileName
-# ²é¿´×î½ü2´ÎµÄÌá½»ÄÚÈİ
-$ git log -p -2
-# Ê¹ÓÃÏŞÖÆ·û-SºóÃæ½ô¸úÒª²éÑ¯µÄ×Ö·û´®
-$ git log -Smethod_name
+git-tag
 
-git show <commit-hash-id>²é¿´Ä³´ÎcommitµÄĞŞ¸ÄÄÚÈİ
+git-diff-files
 
-# ²é¿´20161101ºÅµ½07ºÅ£¬ËÕµÄÌá½»¼ÇÂ¼
-$ git log --pretty="%h - %s" --author=PC --since="2016-11-01" --before="2017-01-27"
+--dry-run
+Show what would be done, without making any changes.
 
-# ÏÔÊ¾ÔÚtest·ÖÖ§µ«ÊÇ²»ÔÚrelease·ÖÖ§ÖĞµÄÌá½»
-$ git log --name-status release..test
-# ÏÔÊ¾ÔÚ±¾µØmaster·ÖÖ§µ«ÊÇ²»ÔÚÔ¶³Ìmaster·ÖÖ§ÖĞµÄÌá½»
-$ git log master --not --remotes=*/master
+-næˆ–--no-tags ä¸ä¸‹è½½tag
+----------------------------------------------------------------
 
-# Shows all commits that are in any of local branches but not in any of 
-# remote-tracking branches for origin (what you have that origin doesn¡¯t).
-$ git log --branches --not --remotes=origin
+$ git status
 
-# ²é¿´½«°ÑÊ²Ã´ÍÆµ½Ô¶³Ì£¬Í¬git log origin/master..
-$ git log origin/master..HEAD
+----------------------------------------------------------------
 
-# ²é¿´µ½Î´´«ËÍµ½Ô¶³Ì´úÂë¿âµÄÌá½»ÏêÇé
-$ git log master ^origin/master
+git apply
 
-# ¿ÉÒÔÍ¨¹ı`git log`ÃüÁî²é¿´¸÷¸ö·ÖÖ§ËùÖ¸ÏòµÄ¶ÔÏó
-$ git log --oneline --decorate
+# --checkåªæ£€æŸ¥è€Œä¸åº”ç”¨patchï¼›--rejectç¦ç”¨åŸå­æ“ä½œï¼Œå³åº”ç”¨å¯åº”ç”¨çš„patch hunkï¼Œæ‹’ç»çš„hunkä¿å­˜åœ¨*.rejæ–‡ä»¶
+$ git apply [--check] [--reject] [<patch>â€¦?]
 
-# Èç¹ûÄãÏë²é¿´Í¼ĞÎÊ½µÄ·Ö²æÀúÊ·,¿ÉÒÔÕâÑù:
-$ git log --oneline --decorate --graph --all
 ----------------------------------------------------------------
 
 git commit
 
-$ git commit -m "ĞŞ¸ÄÄÚÈİ"
+$ git commit -m "ä¿®æ”¹å†…å®¹"
 
-# ÖØĞÂĞŞ¸ÄÉÏ´ÎÌá½»£¨ĞÂÌí¼ÓÒ»ĞŞ¸ÄÎÄ¼ş£©
+# é‡æ–°ä¿®æ”¹ä¸Šæ¬¡æäº¤ï¼ˆæ–°æ·»åŠ ä¸€ä¿®æ”¹æ–‡ä»¶ï¼‰
 $ git add project.property
-$ git commit --amend -m "ĞŞ¸ÄÄÚÈİ"
+$ git commit --amend -m "ä¿®æ”¹å†…å®¹"
 
-# Ö±½ÓÌá½»file£¬²»¾­¹ıgit add
-$ git commit file -m "ĞŞ¸ÄÄÚÈİ"
+# ç›´æ¥æäº¤fileï¼Œä¸ç»è¿‡git add
+$ git commit file -m "ä¿®æ”¹å†…å®¹"
 
-# È¡ÏûÉÏ´Îcommit£¬Ìá½»µÄĞŞ¸Ä»¹ÔÚ£¨remove the commit entirely£©
+# å–æ¶ˆä¸Šæ¬¡commitï¼Œæäº¤çš„ä¿®æ”¹è¿˜åœ¨ï¼ˆremove the commit entirelyï¼‰
 $ git reset HEAD^
-$ git reset HEAD~1 # Í¬ÉÏ
-# È¡ÏûÇ°Á½´Îcommit£¬Ìá½»µÄĞŞ¸Ä¶¼»¹ÔÚ
+$ git reset HEAD~1 # åŒä¸Š
+# å–æ¶ˆå‰ä¸¤æ¬¡commitï¼Œæäº¤çš„ä¿®æ”¹éƒ½è¿˜åœ¨
 $ git reset HEAD~2
 
-# È¡ÏûÉÏ´Îcommit£¬ÓÃ--hard¶ªÆúÌá½»µÄĞŞ¸Ä
+# å–æ¶ˆä¸Šæ¬¡commitï¼Œç”¨--hardä¸¢å¼ƒæäº¤çš„ä¿®æ”¹
 $ git reset --hard HEAD^
 
 ----------------------------------------------------------------
 
-# ÉÏÃæ¶ªÆúÉÏ´Îcommitºó£¬¿ÉÒÔÓÃÏÂÃæ·½·¨ÕÒ»ØÀ´
+# ä¸Šé¢ä¸¢å¼ƒä¸Šæ¬¡commitåï¼Œå¯ä»¥ç”¨ä¸‹é¢æ–¹æ³•æ‰¾å›æ¥
 
 $ git reflog
 ea34578 HEAD@{0}: reset: moving to HEAD^
@@ -186,177 +167,156 @@ $ git reset --hard 3628164
 
 ----------------------------------------------------------------
 
-# git reset ²Ù×÷½á¹ûÎŞ·¨pushµ½Ô¶³Ì¿â£¬¿ÉÒÔÓÃÈçÏÂÃüÁî
+# git reset æ“ä½œç»“æœæ— æ³•pushåˆ°è¿œç¨‹åº“ï¼Œå¯ä»¥ç”¨å¦‚ä¸‹å‘½ä»¤
 $ git revert <commit_id>
 
-# »¹Ô­µ¹ÊıµÚ5´Îµ½µ¹ÊıµÚ3´ÎµÄcommit£¬ÇÒ²»×öcommit£¬Ö»¸Ä±ä±¾µØ´úÂëºÍindex
+# è¿˜åŸå€’æ•°ç¬¬5æ¬¡åˆ°å€’æ•°ç¬¬3æ¬¡çš„commitï¼Œä¸”ä¸åšcommitï¼Œåªæ”¹å˜æœ¬åœ°ä»£ç å’Œindex
 $ git revert -n master~5..master~2
 
 ----------------------------------------------------------------
 
-È¡ÏûÔİ´æµÄÎÄ¼ş
+å–æ¶ˆæš‚å­˜çš„æ–‡ä»¶
+ä½¿ç”¨ git add å°†æ–‡ä»¶æ·»åŠ åˆ°äº†æš‚å­˜åŒºåå¯ä»¥
+ä½¿ç”¨ git reset å°†å…¶ç§»å‡ºåˆ°å·¥ä½œåŒºä¸­ï¼Œä¿®æ”¹å†…å®¹ä¸ä¼šä¸¢å¤±
 
-¶ÔÎÄ¼ş½øĞĞÁËgit add²Ù×÷. Õâ¸öÊ±ºò¿ÉÒÔreset
+# use "git reset HEAD <file>..." to unstage
+# git reset <paths> is the opposite of git add< paths>.
+$ git reset HEAD file  # å®é™…å»æ‰HEADä¹Ÿä¸€æ ·
+$ git reset -- file    # åŒä¸Šï¼Œ--è¡¨ç¤ºæ²¡æœ‰é€‰é¡¹
 
-# °ÑÔİ´æÇøµÄ¸üĞÂÒÆ³öµ½¹¤×÷ÇøÖĞ£¬ĞŞ¸ÄÄÚÈİ»¹ÔÚ£¨use "git reset HEAD <file>..." to unstage£©
-$ git reset HEAD file  # Êµ¼ÊÈ¥µôHEADÒ²Ò»Ñù
-$ git reset -- file    # Í¬ÉÏ£¬--±íÊ¾Ã»ÓĞÑ¡Ïî
 
-git reset <paths> is the opposite of git add< paths>.
+æ’¤é”€å¯¹æ–‡ä»¶çš„ä¿®æ”¹
 
-³·Ïú¶ÔÎÄ¼şµÄĞŞ¸Ä
-
-¶ªÆú¹¤×÷ÇøÖĞµÄĞŞ¸Ä£¨use "git checkout -- <file>..." to discard changes in working directory£©
+ä¸¢å¼ƒå·¥ä½œåŒºä¸­çš„ä¿®æ”¹ï¼ˆuse "git checkout -- <file>..." to discard changes in working directoryï¼‰
 
 $ git checkout -- file
-$ git checkout [file]  # Õâ¸öÍ¬ÉÏ
+$ git checkout [file]  # è¿™ä¸ªåŒä¸Š
 
-# ·ÅÆúµ±Ç°Ä¿Â¼ËùÓĞĞŞ¸Ä£¬´ÓHEADÖĞ¼ì³ö²¢ÇÒ°ÑËü»Ö¸´
+# æ”¾å¼ƒå½“å‰ç›®å½•æ‰€æœ‰ä¿®æ”¹ï¼Œä»HEADä¸­æ£€å‡ºå¹¶ä¸”æŠŠå®ƒæ¢å¤
 $ git checkout .
 
-# È¡ÆäËûcommitÖĞµÄtest.cÎÄ¼ş
+# å–å…¶ä»–commitä¸­çš„test.cæ–‡ä»¶
 $ git checkout master~2 test.c
 
-# »Ö¸´Ä³¸öcommitµÄÖ¸¶¨ÎÄ¼şµ½¹¤×÷Çø
+# æ¢å¤æŸä¸ªcommitçš„æŒ‡å®šæ–‡ä»¶åˆ°å·¥ä½œåŒº
 $ git checkout [commit] [file]
 
-$ git reset --mixed HEAD   # ½«¸Ä¶¯´ÓÔİ´æÇøÖĞÒÆ³ı£¬µ«ÊÇ¸Ä¶¯»¹ÁôÔÚ¹¤×÷ÇøÖĞ¡£
-$ git reset --hard HEAD    # Èç¹ûÄãÏëÍêÈ«ÉáÆúÄãÃ»ÓĞÌá½»µÄ¸Ä¶¯¡£
+$ git reset --mixed HEAD   # å°†æ”¹åŠ¨ä»æš‚å­˜åŒºä¸­ç§»é™¤ï¼Œä½†æ˜¯æ”¹åŠ¨è¿˜ç•™åœ¨å·¥ä½œåŒºä¸­ã€‚
+$ git reset --hard HEAD    # å¦‚æœä½ æƒ³å®Œå…¨èˆå¼ƒä½ æ²¡æœ‰æäº¤çš„æ”¹åŠ¨ã€‚
 $ git reset --mixed <commit_id>
 
-$ git reset --hard origin/master       # °ÑHEADÖ¸Ïò×îĞÂÏÂÔØµÄ°æ±¾
-$ git reset --hard remotes/origin/master # Ó¦¸ÃºÍÉÏÃæÃüÁîÒ»Ñù
+$ git reset --hard origin/master       # æŠŠHEADæŒ‡å‘æœ€æ–°ä¸‹è½½çš„ç‰ˆæœ¬
+$ git reset --hard remotes/origin/master # åº”è¯¥å’Œä¸Šé¢å‘½ä»¤ä¸€æ ·
 
-# pull ºó·¢ÏÖÓĞÎÊÌâ£¬È¡Ïûpull
-$ git reset --hard ORIG_HEAD  # »Øµ½ÉÏ´Î×´Ì¬£¬µ«»á¶ªÆú±¾µØĞŞ¸Ä
-$ git reset --merge ORIG_HEAD # »Øµ½ÉÏ´Î×´Ì¬£¬²»»á¶ªÆú±¾µØĞŞ¸Ä
+# pull åå‘ç°æœ‰é—®é¢˜ï¼Œå–æ¶ˆpull
+$ git reset --hard ORIG_HEAD  # å›åˆ°ä¸Šæ¬¡çŠ¶æ€ï¼Œä½†ä¼šä¸¢å¼ƒæœ¬åœ°ä¿®æ”¹
+$ git reset --merge ORIG_HEAD # å›åˆ°ä¸Šæ¬¡çŠ¶æ€ï¼Œä¸ä¼šä¸¢å¼ƒæœ¬åœ°ä¿®æ”¹
 
 ----------------------------------------------------------------
 
-·ÖÖ§ÇĞ»»£¨ËùÎ½µÄ·ÖÖ§ÇĞ»»¾ÍÊÇHEADÖ¸ÕëµÄÖ¸ÏòµÄ¸Ä±ä£©
+åˆ†æ”¯åˆ‡æ¢ï¼ˆæ‰€è°“çš„åˆ†æ”¯åˆ‡æ¢å°±æ˜¯HEADæŒ‡é’ˆçš„æŒ‡å‘çš„æ”¹å˜ï¼‰
 
-$ git branch dev                 # ´´½¨ÁËÒ»¸öÃûÎªdev µÄĞÂ·ÖÖ§£¬µ«ÊÇÃ»ÓĞÇĞ»»µ½dev·ÖÖ§
-$ git checkout dev               # ÇĞ»»µ½dev·ÖÖ§
-$ git checkout -b dev            # ´´½¨²¢ÇÒ»»µ½ĞÂ·ÖÖ§
+$ git branch dev                 # åˆ›å»ºäº†ä¸€ä¸ªåä¸ºdev çš„æ–°åˆ†æ”¯ï¼Œä½†æ˜¯æ²¡æœ‰åˆ‡æ¢åˆ°devåˆ†æ”¯
+$ git checkout dev               # åˆ‡æ¢åˆ°devåˆ†æ”¯
+$ git checkout -b dev            # åˆ›å»ºå¹¶ä¸”æ¢åˆ°æ–°åˆ†æ”¯
 
-# ´´½¨Ò»¸ö¸ú×Ù·ÖÖ§£¨Ò²½Ğ¡°ÉÏÓÎ·ÖÖ§¡±£©£¬ÊÇÓëÔ¶³Ì·ÖÖ§ÓĞÖ±½Ó¹ØÏµµÄ±¾µØ·ÖÖ§£¬
-# Èç¹ûÔÚÒ»¸ö¸ú×Ù·ÖÖ§ÉÏÖ´ĞĞgit pull£¬git ÄÜ×Ô¶¯µØÊ¶±ğÈ¥ÄÄ¸ö·şÎñÆ÷ÉÏ×¥È¡¡¢ºÏ²¢µ½ÄÄ¸ö·ÖÖ§¡£
+# åˆ›å»ºä¸€ä¸ªè·Ÿè¸ªåˆ†æ”¯ï¼ˆä¹Ÿå«â€œä¸Šæ¸¸åˆ†æ”¯â€ï¼‰ï¼Œæ˜¯ä¸è¿œç¨‹åˆ†æ”¯æœ‰ç›´æ¥å…³ç³»çš„æœ¬åœ°åˆ†æ”¯ï¼Œ
+# å¦‚æœåœ¨ä¸€ä¸ªè·Ÿè¸ªåˆ†æ”¯ä¸Šæ‰§è¡Œgit pullï¼Œgit èƒ½è‡ªåŠ¨åœ°è¯†åˆ«å»å“ªä¸ªæœåŠ¡å™¨ä¸ŠæŠ“å–ã€åˆå¹¶åˆ°å“ªä¸ªåˆ†æ”¯ã€‚
 $ git checkout -b [branch] [remotename]/[branch]
 $ git checkout -b dev origin/dev
 $ git checkout -b dev -t origin/dev
 
-$ git checkout -m dev            # ÇĞ»»µ½dev·ÖÖ§£¬ÇÒºÏ²¢µ±Ç°µÄĞŞ¸Äµ½dev
+$ git checkout -m dev            # åˆ‡æ¢åˆ°devåˆ†æ”¯ï¼Œä¸”åˆå¹¶å½“å‰çš„ä¿®æ”¹åˆ°dev
 
 ----------------------------------------------------------------
 
-·ÖÖ§²Ù×÷
+åˆ†æ”¯æ“ä½œ
 
-ÌõÖ÷Òª·ÖÖ§MasterºÍDevelop¡£Ç°ÕßÓÃÓÚÕıÊ½·¢²¼£¬ºóÕßÓÃÓÚÈÕ³£¿ª·¢¡£
-»¹¿ÉÓĞ¹¦ÄÜ£¨feature£©·ÖÖ§£¬Ô¤·¢²¼£¨release£©·ÖÖ§£¬ĞŞ²¹bug£¨fixbug£©·ÖÖ§¡£
+æ¡ä¸»è¦åˆ†æ”¯Masterå’ŒDevelopã€‚å‰è€…ç”¨äºæ­£å¼å‘å¸ƒï¼Œåè€…ç”¨äºæ—¥å¸¸å¼€å‘ã€‚
+è¿˜å¯æœ‰åŠŸèƒ½ï¼ˆfeatureï¼‰åˆ†æ”¯ï¼Œé¢„å‘å¸ƒï¼ˆreleaseï¼‰åˆ†æ”¯ï¼Œä¿®è¡¥bugï¼ˆfixbugï¼‰åˆ†æ”¯ã€‚
 
-$ git branch     # ²é¿´±¾µØ·ÖÖ§ĞÅÏ¢£¨Ç°´ø*µÄ±íÊ¾µ±Ç°¼ì³öµÄ·ÖÖ§£©
-$ git branch -vv # ²é¿´±¾µØ·ÖÖ§ĞÅÏ¢
+$ git branch     # æŸ¥çœ‹æœ¬åœ°åˆ†æ”¯ä¿¡æ¯ï¼ˆå‰å¸¦*çš„è¡¨ç¤ºå½“å‰æ£€å‡ºçš„åˆ†æ”¯ï¼‰
+$ git branch -vv # æŸ¥çœ‹æœ¬åœ°åˆ†æ”¯ä¿¡æ¯
 
-$ git branch -r  # ²é¿´Ô¶³Ì·ÖÖ§
-$ git branch -a  # ²é¿´ËùÓĞ·ÖÖ§
+$ git branch -r  # æŸ¥çœ‹è¿œç¨‹åˆ†æ”¯
+$ git branch -a  # æŸ¥çœ‹æ‰€æœ‰åˆ†æ”¯
 
-# ĞŞ¸Ä·ÖÖ§Ãû£¬-MÊÇÖ¸Ç¿ÖÆ
-$ git branch (-m | -M) [<oldbranch>] <newbranch> 
+# ä¿®æ”¹åˆ†æ”¯åï¼Œ-Mæ˜¯æŒ‡å¼ºåˆ¶
+$ git branch (-m | -M) [<oldbranch>] <newbranch>
 
-# É¾³ıdev·ÖÖ§£¬Èç¹ûdev·ÖÖ§»¹ÓĞÎ´ºÏ²¢µ½ÉÏÓÎ·ÖÖ§µÄÄÚÈİÔòÒªÓÃ-DÇ¿ÖÆÉ¾³ı·ÖÖ§
+# åˆ é™¤devåˆ†æ”¯ï¼Œå¦‚æœdevåˆ†æ”¯è¿˜æœ‰æœªåˆå¹¶åˆ°ä¸Šæ¸¸åˆ†æ”¯çš„å†…å®¹åˆ™è¦ç”¨-Då¼ºåˆ¶åˆ é™¤åˆ†æ”¯
 $ git branch -d dev
 
-# --merged ²é¿´ÄÄĞ©·ÖÖ§ÒÑ¾­ºÏ²¢µ½µ±Ç°·ÖÖ§
-$ git branch --merged        # Ò»°ãÕâ¸öÁĞ±íÕ¹Ê¾µÄ³ıÁË*ºÅµÄÆäËû·ÖÖ§£¬¶¼¿ÉÒÔÉ¾³ı
-$ git branch --no-merged     # ²é¿´ËùÓĞ°üº¬Î´ºÏ²¢¹¤×÷µÄ·ÖÖ§
+# --merged æŸ¥çœ‹å“ªäº›åˆ†æ”¯å·²ç»åˆå¹¶åˆ°å½“å‰åˆ†æ”¯
+$ git branch --merged        # ä¸€èˆ¬è¿™ä¸ªåˆ—è¡¨å±•ç¤ºçš„é™¤äº†*å·çš„å…¶ä»–åˆ†æ”¯ï¼Œéƒ½å¯ä»¥åˆ é™¤
+$ git branch --no-merged     # æŸ¥çœ‹æ‰€æœ‰åŒ…å«æœªåˆå¹¶å·¥ä½œçš„åˆ†æ”¯
 
-# ÉèÖÃHEADÖ¸ÏòµÄ·ÖÖ§µÄÉÏÓÎÎªÔ¶³Ìdev·ÖÖ§
-$ git branch -u origin/dev     # -uÍ¬--set-upstream-to
-$ git branch --unset-upstream  # È¡Ïûµ±Ç°·ÖÖ§µÄ¸ú×Ù·ÖÖ§
+# è®¾ç½®HEADæŒ‡å‘çš„åˆ†æ”¯çš„ä¸Šæ¸¸ä¸ºè¿œç¨‹devåˆ†æ”¯
+$ git branch -u origin/dev     # -uåŒ--set-upstream-to
+$ git branch --unset-upstream  # å–æ¶ˆå½“å‰åˆ†æ”¯çš„è·Ÿè¸ªåˆ†æ”¯
 
 ----------------------------------------------------------------
 
-# ºÏ²¢ÆäËû·ÖÖ§µÄÒ»¸öĞŞ¸Ä
+# åˆå¹¶å…¶ä»–åˆ†æ”¯çš„ä¸€ä¸ªä¿®æ”¹
 $ git cherry-pick <commit-id>
 
-# Õû¸ö¹¤³ÌPUSHµ½Ô¶³ÌÒ»¸öĞÂ·ÖÖ§
+# æ•´ä¸ªå·¥ç¨‹PUSHåˆ°è¿œç¨‹ä¸€ä¸ªæ–°åˆ†æ”¯
 $ git push origin HEAD:refs/heads/Test_Branch
 
-# Ìá½»²½Öè
+# æäº¤æ­¥éª¤
 $ git add
-# git add --all # °ÑËùÓĞĞŞ¸Ä´æÈëÔİ´æÇø£¬×¼±¸Éú³ÉÒ»¸öÌá½»
+# git add --all # æŠŠæ‰€æœ‰ä¿®æ”¹å­˜å…¥æš‚å­˜åŒºï¼Œå‡†å¤‡ç”Ÿæˆä¸€ä¸ªæäº¤
 $ git commit -m "comment"
 $ git push origin HEAD:refs/for/branch_name
 
 --------------------------------------------------------------
 
-----------------------------------------------------------------
-
-# ÇåÀíÎ´¸ú×ÙµÄÎÄ¼şºÍÎÄ¼ş¼Ğ
-$ git clean -fdx [path]
 
 ----------------------------------------------------------------
 
 $ git rm file
 
-# Èç¹ûÎÄ¼şĞŞ¸Ä,²¢Ìí¼ÓÁËÔİ´æÇø, ĞèÒªÊ¹ÓÃ-f²ÎÊıÀ´Ç¿ÖÆÉ¾³ı(force)
+# å¦‚æœæ–‡ä»¶ä¿®æ”¹,å¹¶æ·»åŠ äº†æš‚å­˜åŒº, éœ€è¦ä½¿ç”¨-få‚æ•°æ¥å¼ºåˆ¶åˆ é™¤(force)
 $ git rm -f file
 
-# ¿ÉÒÔÊ¹ÓÃglobÄ£Ê½,ÈçÏÂ
-$ git rm log/*.log         # É¾³ılogÄ¿Â¼ÏÂËùÓĞÃû³ÆÊÇ.log½áÎ²ÎÄ¼ş
-$ git rm *~                # É¾³ıÒÔ~½áÎ²µÄËùÓĞÎÄ¼ş
+# å¯ä»¥ä½¿ç”¨globæ¨¡å¼,å¦‚ä¸‹
+$ git rm log/*.log         # åˆ é™¤logç›®å½•ä¸‹æ‰€æœ‰åç§°æ˜¯.logç»“å°¾æ–‡ä»¶
+$ git rm *~                # åˆ é™¤ä»¥~ç»“å°¾çš„æ‰€æœ‰æ–‡ä»¶
 
 ----------------------------------------------------------------
 
-# ´ò°ü²¢Ñ¹Ëõ
+# æ‰“åŒ…å¹¶å‹ç¼©
 $ git archive --format=tar --prefix=git-1.4.0/ v1.4.0 | gzip >git-1.4.0.tar.gz
 
 ----------------------------------------------------------------
 
-repo²Ù×÷
-
-repo forall -c git reset --hard HEAD
-repo forall -c git clean -fdx
-repo forall -p -c git branch         # ´òÓ¡³öÃ¿¸ö²Ö¿âµÄÂ·¾¶
-
-repo sync -cdx  # ¸üĞÂÍ¬Ê±ÇåÀí¹¤³Ì
-
-repo init -u
-repo sync -c --no-tags -j8
-repo start branch_name --all
-
-git push caf HEAD:refs/for/branch_name
-repo upload .
-
---------------------------------------------------------------
-
-# fetch²»»áºÏ²¢¸üĞÂµ½µ±Ç°·ÖÖ§£¬ºóĞø»¹Òªmerge
+# fetch ä¸ä¼šåˆå¹¶æ›´æ–°åˆ°å½“å‰åˆ†æ”¯ï¼Œåç»­è¿˜è¦ merge
 $ git fetch origin
-$ git fetch origin master # Ö»fetch master·ÖÖ§
+$ git fetch origin master # åªfetch masteråˆ†æ”¯
 $ git merge origin/master
 
 $ git pull origin master
 
-# ÔÚµ±Ç°·ÖÖ§ÉÏºÏ²¢Ô¶³Ì master ·ÖÖ§
-$ git merge origin/master # »òÕß git rebase origin/master
+# åœ¨å½“å‰åˆ†æ”¯ä¸Šåˆå¹¶è¿œç¨‹ master åˆ†æ”¯
+$ git merge origin/master # æˆ–è€… git rebase origin/master
 
 ----------------------------------------------------------------
 
-merge»á×Ô¶¯Ìá½»£»µ±Ç°¹¤×÷Çø×îºÃ²»ÒªÓĞÎ´Ìá½»µÄĞŞ¸Ä
-$ git merge -m <msg> <commit>.... # ÓÃmsg´úÌæ×Ô¶¯mergeËµÃ÷
-$ git merge --no-commit dev # merge dev·ÖÖ§µ½µ±Ç°·ÖÖ§µ«ÊÇ²»×Ô¶¯Ìá½»
+mergeä¼šè‡ªåŠ¨æäº¤ï¼Œå½“å‰å·¥ä½œåŒºæœ€å¥½ä¸è¦æœ‰æœªæäº¤çš„ä¿®æ”¹
+$ git merge -m <msg> <commit>.... # ç”¨msgä»£æ›¿è‡ªåŠ¨mergeè¯´æ˜
+$ git merge --no-commit dev # merge devåˆ†æ”¯åˆ°å½“å‰åˆ†æ”¯ä½†æ˜¯ä¸è‡ªåŠ¨æäº¤
 $ git merge --abort         # is equivalent to git reset --merge when MERGE_HEAD is present.
 
 --------------------------------------------------------------
 
-´´½¨ÌØĞÔ·ÖÖ§
-mergeÊ±Ê¹ÓÃ--no-ff²ÎÊı½ûÓÃfast-forwardºÏ²¢£¬
-ÕâÑù»áÔÚdevelop·ÖÖ§ÉÏÉú³ÉÒ»¸öĞÂ½Úµã£¬±£Ö¤°æ±¾Ñİ½øµÄÇåÎú¡£
+åˆ›å»ºç‰¹æ€§åˆ†æ”¯
+mergeæ—¶ä½¿ç”¨--no-ffå‚æ•°ç¦ç”¨fast-forwardåˆå¹¶ï¼Œ
+è¿™æ ·ä¼šåœ¨developåˆ†æ”¯ä¸Šç”Ÿæˆä¸€ä¸ªæ–°èŠ‚ç‚¹ï¼Œä¿è¯ç‰ˆæœ¬æ¼”è¿›çš„æ¸…æ™°ã€‚
 
 $ git checkout -b myfeature develop
 Switched to a new branch "myfeature"
 
-# Ìí¼Ó¹¦ÄÜ´úÂë
+# æ·»åŠ åŠŸèƒ½ä»£ç 
 
 $ git checkout develop
 Switched to branch 'develop'
@@ -368,24 +328,25 @@ Updating ea1b82a..05e9557
 $ git branch -d myfeature
 Deleted branch myfeature
 
-$ git push origin develop # Èç¹ûdevelop·ÖÖ§²»´æÔÚ£¬Ôò»á±»ĞÂ½¨¡£
+$ git push origin develop # å¦‚æœdevelopåˆ†æ”¯ä¸å­˜åœ¨ï¼Œåˆ™ä¼šè¢«æ–°å»ºã€‚
 
 ----------------------------------------------------------------
 
-stash
+stash å°†å·¥ä½œåŒºä¸æš‚å­˜åŒºä¸­çš„å†…å®¹åšä¸€ä¸ªæäº¤ï¼Œä¿å­˜èµ·æ¥ï¼Œ
+ç„¶åä½¿ç”¨ reset Hard é€‰é¡¹æ¢å¤å·¥ä½œåŒºä¸æš‚å­˜åŒºå†…å®¹ã€‚
+æˆ‘ä»¬å¯ä»¥éšæ—¶ä½¿ç”¨ stash apply å°†ä¿®æ”¹åº”ç”¨å›æ¥ã€‚
+stash å®ç°æ€è·¯å°†æˆ‘ä»¬çš„ä¿®æ”¹æäº¤åˆ°æœ¬åœ°ä»“åº“ï¼Œ
+ä½¿ç”¨ç‰¹æ®Šçš„åˆ†æ”¯æŒ‡é’ˆï¼ˆ.git/refs/stashï¼‰å¼•ç”¨è¯¥æäº¤ï¼Œ
+ç„¶ååœ¨æ¢å¤çš„æ—¶å€™ï¼Œå°†è¯¥æäº¤æ¢å¤å³å¯ã€‚
 
-ÓĞÊ±£¬ÔÚÒ»¸ö·ÖÖ§ÉÏ×öÁËÒ»Ğ©¹¤×÷£¬ĞŞ¸ÄÁËºÜ¶à´úÂë£¬¶øÕâÊ±ĞèÒªÇĞ»»µ½ÁíÒ»¸ö·ÖÖ§¸Éµã±ğµÄÊÂ¡£µ«ÓÖ²»Ïë½«Ö»×öÁËÒ»°ëµÄ¹¤×÷Ìá½»¡£
-stash ½«¹¤×÷ÇøÓëÔİ´æÇøÖĞµÄÄÚÈİ×öÒ»¸öÌá½»£¬±£´æÆğÀ´£¬È»ºóÊ¹ÓÃreset Hard Ñ¡Ïî»Ö¸´¹¤×÷ÇøÓëÔİ´æÇøÄÚÈİ¡£ÎÒÃÇ¿ÉÒÔËæÊ±Ê¹ÓÃ stash apply ½«ĞŞ¸ÄÓ¦ÓÃ»ØÀ´¡£
-stash ÊµÏÖË¼Â·½«ÎÒÃÇµÄĞŞ¸ÄÌá½»µ½±¾µØ²Ö¿â£¬Ê¹ÓÃÌØÊâµÄ·ÖÖ§Ö¸Õë£¨.git/refs/stash£©ÒıÓÃ¸ÃÌá½»£¬È»ºóÔÚ»Ö¸´µÄÊ±ºò£¬½«¸ÃÌá½»»Ö¸´¼´¿É¡£
-
-git stash list [<options>]            # ÁĞ³östash£¨´ø<message>£©
-git stash show [<stash>]              # ÁĞ³ö×îĞÂµÄÒ»¸östash
-git stash show -p [<stash>]           # ÁĞ³ö×îĞÂµÄÒ»¸östash£¨»¹ÏêÏ¸ĞŞ¸ÄÄÚÈİ£©
-git stash drop [-q|--quiet] [<stash>]            # É¾³ıÒ»¸östash£¬Ä¬ÈÏÎªstash@{0}
-git stash pop [--index] [-q|--quiet] [<stash>]   # »¹Ô­´úÂë²¢ÇÒÉ¾³ıstash
-git stash apply [--index] [-q|--quiet] [<stash>] # »¹Ô­´úÂëµ«²»É¾³ıstash
+git stash list [<options>]            # åˆ—å‡ºstashï¼ˆå¸¦<message>ï¼‰
+git stash show [<stash>]              # åˆ—å‡ºæœ€æ–°çš„ä¸€ä¸ªstash
+git stash show -p [<stash>]           # åˆ—å‡ºæœ€æ–°çš„ä¸€ä¸ªstashï¼ˆè¿˜è¯¦ç»†ä¿®æ”¹å†…å®¹ï¼‰
+git stash drop [-q|--quiet] [<stash>]            # åˆ é™¤ä¸€ä¸ªstashï¼Œé»˜è®¤ä¸ºstash@{0}
+git stash pop [--index] [-q|--quiet] [<stash>]   # è¿˜åŸä»£ç å¹¶ä¸”åˆ é™¤stash
+git stash apply [--index] [-q|--quiet] [<stash>] # è¿˜åŸä»£ç ä½†ä¸åˆ é™¤stash
 git stash branch <branchname> [<stash>]
-git stash [save [--patch] [-k|--[no-]keep-index] [-q|--quiet] [-u|--include-untracked] [-a|--all] [<message>]] # Ìí¼Óµ½stash
+git stash [save [--patch] [-k|--[no-]keep-index] [-q|--quiet] [-u|--include-untracked] [-a|--all] [<message>]] # æ·»åŠ åˆ°stash
 git stash clear
 
 ----------------------------------------------------------------
@@ -420,21 +381,21 @@ $ git commit -a -c ORIG_HEAD  (3)
 1.This is most often done when you remembered what you just committed is incomplete,
   or you misspelled your commit message, or both. Leaves working tree as it was before "reset".
 2.Make corrections to working tree files.
-3."reset" copies the old head to .git/ORIG_HEAD; redo the commit by starting with its log message. 
+3."reset" copies the old head to .git/ORIG_HEAD; redo the commit by starting with its log message.
   If you do not need to edit the message further, you can give -C option instead.
 
 --------------------------------------------------------------
 
 $ tree -L 1
 .
-|-- HEAD         # Õâ¸ögitÏîÄ¿µ±Ç°´¦ÔÚÄÄ¸ö·ÖÖ§Àï
-|-- config       # ÏîÄ¿µÄÅäÖÃĞÅÏ¢£¬git configÃüÁî»á¸Ä¶¯Ëü
-|-- description  # ÏîÄ¿µÄÃèÊöĞÅÏ¢
-|-- hooks/       # ÏµÍ³Ä¬ÈÏ¹³×Ó½Å±¾Ä¿Â¼
-|-- index        # Ë÷ÒıÎÄ¼ş
-|-- logs/        # ¸÷¸örefsµÄÀúÊ·ĞÅÏ¢
-|-- objects/     # Git±¾µØ²Ö¿âµÄËùÓĞ¶ÔÏó (commits, trees, blobs, tags)
-`-- refs/        # ±êÊ¶ÄãÏîÄ¿ÀïµÄÃ¿¸ö·ÖÖ§Ö¸ÏòÁËÄÄ¸öÌá½»(commit)¡£
+|-- HEAD         # è¿™ä¸ªgité¡¹ç›®å½“å‰å¤„åœ¨å“ªä¸ªåˆ†æ”¯é‡Œ
+|-- config       # é¡¹ç›®çš„é…ç½®ä¿¡æ¯ï¼Œgit configå‘½ä»¤ä¼šæ”¹åŠ¨å®ƒ
+|-- description  # é¡¹ç›®çš„æè¿°ä¿¡æ¯
+|-- hooks/       # ç³»ç»Ÿé»˜è®¤é’©å­è„šæœ¬ç›®å½•
+|-- index        # ç´¢å¼•æ–‡ä»¶
+|-- logs/        # å„ä¸ªrefsçš„å†å²ä¿¡æ¯
+|-- objects/     # Gitæœ¬åœ°ä»“åº“çš„æ‰€æœ‰å¯¹è±¡ (commits, trees, blobs, tags)
+`-- refs/        # æ ‡è¯†ä½ é¡¹ç›®é‡Œçš„æ¯ä¸ªåˆ†æ”¯æŒ‡å‘äº†å“ªä¸ªæäº¤(commit)ã€‚
 
 --------------------------------------------------------------
 
@@ -461,7 +422,7 @@ would be:
 git rebase [--onto <newbase>]	[<upstream> [<branch>]]
 transplant a topic branch based on one branch to another, to pretend that you forked the topic branch from the latter branch
 
-First let¡¯s assume your topic is based on branch next. For example, a feature developed in topic depends on some functionality which is found in next.
+First letâ€™s assume your topic is based on branch next. For example, a feature developed in topic depends on some functionality which is found in next.
 
     o---o---o---o---o  master
          \
@@ -480,5 +441,66 @@ We want to make topic forked from branch master; for example, because the functi
 We can get this using the following command:
 
 git rebase --onto master next topic
+
+--------------------------------------------------------------
+
+gitè®¾ç½®
+
+# æ­£å¸¸æ˜¾ç¤ºä¸­æ–‡æ–‡ä»¶å
+$ git config --global core.quotepath false
+
+# ä¸è¿›è¡ŒLF--CRLFè½¬æ¢
+$ git config --global core.autocrlf false
+
+# è§£å†³git cloneæ—¶æ˜¾ç¤º"Filename too long"é”™è¯¯
+git config --global core.longpaths true
+
+# è®¾ç½®é‚®ç®±ç”¨æˆ·åå’Œå¯†ç 
+$ git config --global user.email "lonet@qq.com"
+$ git config --global user.name wgj
+
+----------------------------------------------------------------
+
+# linuxå†…æ ¸ä»£ç ä¸‹è½½
+$ git clone git://git.kernel.org/pub/scm/git/git.git
+$ git clone http://www.kernel.org/pub/scm/git/git.git
+
+# notepad++ ä»£ç ä¸‹è½½
+$ git clone https://github.com/notepad-plus-plus/notepad-plus-plus
+
+# glibä¸‹è½½
+$ git clone https://github.com/GNOME/glib.git
+
+$ git clone https://github.com/openembedded/meta-openembedded.git
+$ git clone https://github.com/openembedded/openembedded-core.git
+
+# exfat-nofuse
+git clone https://github.com/dorimanx/exfat-nofuse.git
+
+# tr069-netcwmp
+$ git clone https://github.com/netcwmp/netcwmp.git
+
+# nodogsplash
+$ git clone https://github.com/nodogsplash/nodogsplash.git
+
+# wifidog
+$ git clone https://github.com/wifidog/wifidog-gateway.git
+
+----------------------------------------------------------------
+
+repoæ“ä½œ
+
+repo forall -c git reset --hard HEAD
+repo forall -c git clean -fdx
+repo forall -p -c git branch         # æ‰“å°å‡ºæ¯ä¸ªä»“åº“çš„è·¯å¾„
+
+repo sync -cdx  # æ›´æ–°åŒæ—¶æ¸…ç†å·¥ç¨‹
+
+repo init -u
+repo sync -c --no-tags -j8
+repo start branch_name --all
+
+git push caf HEAD:refs/for/branch_name
+repo upload .
 
 --------------------------------------------------------------
