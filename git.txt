@@ -61,14 +61,15 @@ origin  https://github.com/lonetmoon/hello-world.git (push)
 
 git diff
 
-# 查看已追踪但尚未暂存的文件更新了哪些部分, 不添加额外参数
+# 查看工作区中的修改
 $ git diff
 
-# 对使用git add添加到了暂存区的内容, 使用--staged参数或者--cached
+# 查看暂存区中的修改（将要提交的修改）
 $ git diff --staged
-$ git diff --cached [file]
+$ git diff --cached
 
-$ git diff --check  # 检查修改是否引入了空白字符
+# 检查修改是否引入了空白字符
+$ git diff --check
 
 # --name-only 只显示文件名
 git diff --name-only HEAD~ HEAD
