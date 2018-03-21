@@ -84,7 +84,100 @@ $ git diff topic...master  (3)
 
 ----------------------------------------------------------------
 
+撤销对文件的修改（丢弃工作区中的修改）
+（use "git checkout -- <file>..." to discard changes in working directory）
 
+$ git checkout -- file
+$ git checkout [file]  # 这个同上
+
+# 放弃当前目录所有修改，从HEAD中检出并且把它恢复
+$ git checkout .
+
+# 取其他提交中的文件
+$ git checkout master~2 file
+
+# 取某个提交中的指定文件
+$ git checkout [commit] [file]
+
+----------------------------------------------------------------
+
+取消暂存的文件
+使用 git add 将文件添加到了暂存区后可以
+使用 git reset 将其移出到工作区中，修改内容不会丢失
+（use "git reset HEAD <file>..." to unstage）
+# git reset <paths> is the opposite of git add< paths>.
+$ git reset HEAD file  # 实际去掉HEAD也一样
+$ git reset -- file    # 同上，--表示没有选项
+
+----------------------------------------------------------------
+
+git commit
+
+$ git commit -m "修改内容"
+
+# 重新修改上次提交（新添加一修改文件）
+$ git add project.property
+$ git commit --amend -m "修改内容"
+
+# 直接提交file，不经过git add
+$ git commit file -m "修改内容"
+
+----------------------------------------------------------------
+
+撤销提交的修改
+
+# 取消上次的提交，提交的修改还在
+$ git reset HEAD^
+$ git reset HEAD~1 # 同上
+
+# 取消前两次的提交，提交的修改还在
+$ git reset HEAD~2
+
+# 取消上次的提交，用 --hard 丢弃提交的修改
+$ git reset --hard HEAD^
+
+----------------------------------------------------------------
+
+# 上面丢弃上次的提交后，可以用下面方法再找回来
+$ git reflog
+ea34578 HEAD@{0}: reset: moving to HEAD^
+3628164 HEAD@{1}: commit: append GPL
+ea34578 HEAD@{2}: commit: add distributed
+cb926e7 HEAD@{3}: commit (initial): wrote a readme file
+$ git reset --hard 3628164
+
+----------------------------------------------------------------
+
+# git reset 操作结果无法推到远程库，可以用如下命令
+$ git revert <commit_id>
+
+# 还原倒数第5次到倒数第3次的commit，且不做commit，只改变本地代码和index
+$ git revert -n master~5..master~2
+
+----------------------------------------------------------------
+
+--mixed是reset的默认参数，它将重置HEAD到另外一个commit，并且重置index以便和HEAD相匹配，
+这意味着working copy不会被更改，
+所有的在original HEAD和你重置到的那个commit之间的所有变更将作为local modifications or untracked保存在working area中
+
+--soft参数告诉git重置HEAD到另外一个commit，但到此为止。
+这意味着index,working copy都不会做任何变化，
+所有的在original HEAD和你重置到的那个commit之间的所有变更都放在stage(index)区域中。
+
+--hard参数将会blow out everything。它将重置HEAD返回到另外一个commit，重置index HEAD working copy。
+
+$ git reset --mixed HEAD   # 将改动从暂存区中移除，但是改动还留在工作区中。
+$ git reset --mixed <commit_id>
+$ git reset --hard HEAD    # 完全丢弃未提交的改动。
+
+$ git reset --hard origin/master       	 # 把HEAD指向最新下载的版本
+$ git reset --hard remotes/origin/master # 应该和上面命令一样
+
+# git pull 后发现有问题，取消 pull
+$ git reset --hard ORIG_HEAD  # 回到上次状态，但会丢弃本地修改
+$ git reset --merge ORIG_HEAD # 回到上次状态，不会丢弃本地修改
+
+----------------------------------------------------------------
 
 
 
@@ -131,86 +224,6 @@ git apply
 
 # --check只检查而不应用patch；--reject禁用原子操作，即应用可应用的patch hunk，拒绝的hunk保存在*.rej文件
 $ git apply [--check] [--reject] [<patch>…?]
-
-----------------------------------------------------------------
-
-git commit
-
-$ git commit -m "修改内容"
-
-# 重新修改上次提交（新添加一修改文件）
-$ git add project.property
-$ git commit --amend -m "修改内容"
-
-# 直接提交file，不经过git add
-$ git commit file -m "修改内容"
-
-# 取消上次commit，提交的修改还在（remove the commit entirely）
-$ git reset HEAD^
-$ git reset HEAD~1 # 同上
-# 取消前两次commit，提交的修改都还在
-$ git reset HEAD~2
-
-# 取消上次commit，用--hard丢弃提交的修改
-$ git reset --hard HEAD^
-
-----------------------------------------------------------------
-
-# 上面丢弃上次commit后，可以用下面方法找回来
-
-$ git reflog
-ea34578 HEAD@{0}: reset: moving to HEAD^
-3628164 HEAD@{1}: commit: append GPL
-ea34578 HEAD@{2}: commit: add distributed
-cb926e7 HEAD@{3}: commit (initial): wrote a readme file
-$ git reset --hard 3628164
-
-----------------------------------------------------------------
-
-# git reset 操作结果无法push到远程库，可以用如下命令
-$ git revert <commit_id>
-
-# 还原倒数第5次到倒数第3次的commit，且不做commit，只改变本地代码和index
-$ git revert -n master~5..master~2
-
-----------------------------------------------------------------
-
-取消暂存的文件
-使用 git add 将文件添加到了暂存区后可以
-使用 git reset 将其移出到工作区中，修改内容不会丢失
-
-# use "git reset HEAD <file>..." to unstage
-# git reset <paths> is the opposite of git add< paths>.
-$ git reset HEAD file  # 实际去掉HEAD也一样
-$ git reset -- file    # 同上，--表示没有选项
-
-
-撤销对文件的修改
-
-丢弃工作区中的修改（use "git checkout -- <file>..." to discard changes in working directory）
-
-$ git checkout -- file
-$ git checkout [file]  # 这个同上
-
-# 放弃当前目录所有修改，从HEAD中检出并且把它恢复
-$ git checkout .
-
-# 取其他commit中的test.c文件
-$ git checkout master~2 test.c
-
-# 恢复某个commit的指定文件到工作区
-$ git checkout [commit] [file]
-
-$ git reset --mixed HEAD   # 将改动从暂存区中移除，但是改动还留在工作区中。
-$ git reset --hard HEAD    # 如果你想完全舍弃你没有提交的改动。
-$ git reset --mixed <commit_id>
-
-$ git reset --hard origin/master       # 把HEAD指向最新下载的版本
-$ git reset --hard remotes/origin/master # 应该和上面命令一样
-
-# pull 后发现有问题，取消pull
-$ git reset --hard ORIG_HEAD  # 回到上次状态，但会丢弃本地修改
-$ git reset --merge ORIG_HEAD # 回到上次状态，不会丢弃本地修改
 
 ----------------------------------------------------------------
 
