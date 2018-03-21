@@ -73,17 +73,12 @@ Show what would be done, without making any changes.
 -n或--no-tags 不下载tag
 ----------------------------------------------------------------
 
-git status
+$ git status
 
 ----------------------------------------------------------------
 
 # 查看到未传送到远程代码库的提交
 $ git cherry -v
-
-----------------------------------------------------------------
-
-git diff --name-only HEAD~ HEAD
-git diff --name-only <commit-1> <commit-2>
 
 ----------------------------------------------------------------
 
@@ -97,6 +92,10 @@ $ git diff --cached [file]
 
 $ git diff --check  # 检查修改是否引入了空白字符
 
+# --name-only 只显示文件名
+git diff --name-only HEAD~ HEAD
+git diff --name-only <commit-1> <commit-2>
+
 $ git diff topic master    (1)
 $ git diff topic..master   (2)
 $ git diff topic...master  (3)
@@ -109,7 +108,7 @@ $ git diff topic...master  (3)
 git apply
 
 # --check只检查而不应用patch；--reject禁用原子操作，即应用可应用的patch hunk，拒绝的hunk保存在*.rej文件
-$ git apply [--check] [--reject] [<patch>…?] 
+$ git apply [--check] [--reject] [<patch>…?]
 
 ----------------------------------------------------------------
 
@@ -237,8 +236,14 @@ $ git reset --merge ORIG_HEAD # 回到上次状态，不会丢弃本地修改
 分支切换（所谓的分支切换就是HEAD指针的指向的改变）
 
 $ git branch dev                 # 创建了一个名为dev 的新分支，但是没有切换到dev分支
+$ git checkout dev               # 切换到dev分支
 $ git checkout -b dev            # 创建并且换到新分支
-$ git checkout -b dev origin/dev # 新建并切换到dev分支，并设置其跟踪分支
+
+# 创建一个跟踪分支（也叫“上游分支”），是与远程分支有直接关系的本地分支，
+# 如果在一个跟踪分支上执行git pull，git 能自动地识别去哪个服务器上抓取、合并到哪个分支。
+$ git checkout -b [branch] [remotename]/[branch]
+$ git checkout -b dev origin/dev
+$ git checkout -b dev -t origin/dev
 
 $ git checkout -m dev            # 切换到dev分支，且合并当前的修改到dev
 
@@ -255,24 +260,15 @@ $ git branch -vv # 查看本地分支信息
 $ git branch -r  # 查看远程分支
 $ git branch -a  # 查看所有分支
 
-$ git branch (-m | -M) [<oldbranch>] <newbranch> # 修改分支名，-M是指强制
+# 修改分支名，-M是指强制
+$ git branch (-m | -M) [<oldbranch>] <newbranch> 
 
-# 删除dev分支，如果dev分支还有未合并到上游分支的内容则无法删除
-$ git branch -d dev # -D 强制删除分支
+# 删除dev分支，如果dev分支还有未合并到上游分支的内容则要用-D强制删除分支
+$ git branch -d dev
 
 # --merged 查看哪些分支已经合并到当前分支
 $ git branch --merged        # 一般这个列表展示的除了*号的其他分支，都可以删除
 $ git branch --no-merged     # 查看所有包含未合并工作的分支
-
-跟踪分支（也叫“上游分支”）是与远程分支有直接关系的本地分支，
-如果在一个跟踪分支上输入git pull，git 能自动地识别去哪个服务器上抓取、合并到哪个分支。
-
-# 创建一个跟踪分支
-$ git checkout -b [branch] [remotename]/[branch]
-# git 提供了 --track 快捷方式
-$ git checkout --track origin/dev
-# 如果想要自定义本地分支名字
-$ git checkout -b 任意分支名字 origin/dev
 
 # 设置HEAD指向的分支的上游为远程dev分支
 $ git branch -u origin/dev     # -u同--set-upstream-to
