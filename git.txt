@@ -11,7 +11,7 @@ $ git clean -fdx [path]
 git log
 
 # 查看某个文件的最近2次提交
-$ git log -n2 fileName
+$ git log -2 fileName
 
 # 显示最近1次提交的内容差异
 $ git log -p -1
@@ -24,6 +24,9 @@ $ git log -Smethod_name
 
 # 查看某次提交的修改内容
 $ git show <commit-hash-id>
+
+# 查看某次提交的某个文件修改内容
+$ git show [commit]:[filename]
 
 # 查看20161101号到07号，PC的提交记录
 $ git log --pretty="%h - %s" --author=PC --since="2016-11-01" --before="2017-01-27"
@@ -108,6 +111,17 @@ $ git checkout [commit] [file]
 # git reset <paths> is the opposite of git add< paths>.
 $ git reset HEAD file  # 实际去掉HEAD也一样
 $ git reset -- file    # 同上，--表示没有选项
+
+--------------------------------------------------------------
+
+# 解决问题产生多个提交时在合并到主干时最好只产生一个提交
+$ git rebase -i origin/master # 除第一行外其他都选 s
+
+# 也可以这样（比如修改问题产生了5次提交）
+$ git reset HEAD~5
+$ git add .
+$ git commit -am "Here's the bug fix that closes #28"
+$ git push --force
 
 ----------------------------------------------------------------
 
@@ -310,7 +324,8 @@ $ git merge origin/master
 
 $ git pull origin master
 
-# 在当前分支上合并远程 master 分支
+# 在当前分支上合并远程 master 分支（与主干保持同步）
+$ git fetch origin
 $ git merge origin/master # 或者 git rebase origin/master
 
 ----------------------------------------------------------------
