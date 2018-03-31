@@ -42,10 +42,11 @@ $ git log --branches --not --remotes=origin
 
 # 查看master分支未推到远程master的提交
 $ git log master --not --remotes=*/master
-$ git log master ^origin/master
-$ git log master origin/master..
 $ git log origin/master..HEAD
-$ git cherry -v
+$ git log master origin/master..# 同下
+$ git log master ^origin/master # 可以查看未传送提交的详细信息
+$ git cherry -v                 # 只能查看未传送提交的描述/说明
+$ git status                    # 只能查看未传送提交的次数
 
 # 可以通过`git log`命令查看各个分支所指向的对象
 $ git log --oneline --decorate
