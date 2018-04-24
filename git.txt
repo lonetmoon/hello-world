@@ -1,4 +1,5 @@
 GIT笔记
+--180331
 
 
 ----------------------------------------------------------------
@@ -41,12 +42,13 @@ $ git log --name-status master..dev
 $ git log --branches --not --remotes=origin
 
 # 查看master分支未推到远程master的提交
-$ git log master --not --remotes=*/master
-$ git log origin/master..HEAD
-$ git log master origin/master..# 同下
-$ git log master ^origin/master # 可以查看未传送提交的详细信息
-$ git cherry -v                 # 只能查看未传送提交的描述/说明
 $ git status                    # 只能查看未传送提交的次数
+$ git cherry -v                 # 只能查看未传送提交的说明
+$ git log master ^origin/master # 可以查看未传送提交的详细信息
+
+$ git log master origin/master..          # 同上
+$ git log master --not --remotes=*/master # 同上
+$ git log origin/master..HEAD             # 同上
 
 # 可以通过`git log`命令查看各个分支所指向的对象
 $ git log --oneline --decorate
@@ -88,34 +90,33 @@ $ git diff topic...master  (3)
 
 ----------------------------------------------------------------
 
-撤销对文件的修改（丢弃工作区中的修改）
+丢弃工作区中的修改
 （use "git checkout -- <file>..." to discard changes in working directory）
 
-$ git checkout -- file
-$ git checkout [file]  # 这个同上
-
-# 放弃当前目录所有修改，从HEAD中检出并且把它恢复
-$ git checkout .
+# 从HEAD中检出并且恢复
+$ git checkout -- <file>
+$ git checkout [file]    # 同上
+$ git checkout .         # 丢弃当前目录所有修改
 
 # 取其他提交中的文件
 $ git checkout master~2 file
-
-# 取某个提交中的指定文件
 $ git checkout [commit] [file]
 
 ----------------------------------------------------------------
 
 取消暂存的文件
+ (use "git reset HEAD <file>..." to unstage)
+
 使用 git add 将文件添加到了暂存区后可以
 使用 git reset 将其移出到工作区中，修改内容不会丢失
-（use "git reset HEAD <file>..." to unstage）
-# git reset <paths> is the opposite of git add< paths>.
+# git reset <paths> is the opposite of git add <paths>.
 $ git reset HEAD file  # 实际去掉HEAD也一样
 $ git reset -- file    # 同上，--表示没有选项
 
 --------------------------------------------------------------
 
-# 解决问题产生多个提交时在合并到主干时最好只产生一个提交
+解决问题产生多个提交时在合并到主干时最好只产生一个提交
+
 $ git rebase -i origin/master # 除第一行外其他都选 s
 
 # 也可以这样（比如修改问题产生了5次提交）
@@ -137,6 +138,25 @@ $ git commit --amend -m "修改内容"
 # 直接提交file，不经过git add
 $ git commit file -m "修改内容"
 
+# 提交时换行，标题和内容及结束都有空格
+$ git commit -m  'fix wrong path in the generated t32 scripts
+
+1.fix wrong path
+2.use path variable instead of fixed path
+'
+[master 3de3518] fix wrong path in the generated t32 scripts
+ 1 file changed, 55 insertions(+), 9 deletions(-)
+
+$ git log -3
+commit 3de351873c98ec27dd603d09b190f8f51752b0a6
+Author: 王国纪 <lonet@qq.com>
+Date:   Fri Apr 20 10:28:05 2018 +0800
+
+    fix wrong path in the generated t32 scripts
+
+    1.fix wrong path
+    2.use path variable instead of fixed path
+
 ----------------------------------------------------------------
 
 撤销提交的修改
@@ -144,11 +164,9 @@ $ git commit file -m "修改内容"
 # 取消上次的提交，提交的修改还在
 $ git reset HEAD^
 $ git reset HEAD~1 # 同上
+$ git reset HEAD~2 # 取消前两次的提交
 
-# 取消前两次的提交，提交的修改还在
-$ git reset HEAD~2
-
-# 取消上次的提交，用 --hard 丢弃提交的修改
+# 取消上次的提交并丢弃提交的修改
 $ git reset --hard HEAD^
 
 ----------------------------------------------------------------
@@ -194,7 +212,7 @@ $ git reset --merge ORIG_HEAD # 回到上次状态，不会丢弃本地修改
 
 ----------------------------------------------------------------
 
-
+gitk --all
 
 
 
@@ -255,6 +273,9 @@ $ git checkout -b dev origin/dev
 $ git checkout -b dev -t origin/dev
 
 $ git checkout -m dev            # 切换到dev分支，且合并当前的修改到dev
+
+# 重命名分支
+git branch (-m | -M) [<oldbranch>] <newbranch>
 
 ----------------------------------------------------------------
 
